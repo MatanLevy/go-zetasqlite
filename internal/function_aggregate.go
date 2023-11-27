@@ -84,11 +84,23 @@ func (f *ARRAY_AGG) Done() (Value, error) {
 		for orderBy := 0; orderBy < len(f.opt.OrderBy); orderBy++ {
 			if f.opt.OrderBy[orderBy].IsAsc {
 				sort.Slice(f.values, func(i, j int) bool {
+					if f.values[i].OrderBy[orderBy].Value == nil {
+						return true
+					}
+					if f.values[j].OrderBy[orderBy].Value == nil {
+						return false
+					}
 					v, _ := f.values[i].OrderBy[orderBy].Value.LT(f.values[j].OrderBy[orderBy].Value)
 					return v
 				})
 			} else {
 				sort.Slice(f.values, func(i, j int) bool {
+					if f.values[i].OrderBy[orderBy].Value == nil {
+						return true
+					}
+					if f.values[j].OrderBy[orderBy].Value == nil {
+						return false
+					}
 					v, _ := f.values[i].OrderBy[orderBy].Value.GT(f.values[j].OrderBy[orderBy].Value)
 					return v
 				})
