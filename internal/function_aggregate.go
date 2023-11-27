@@ -87,7 +87,6 @@ func (f *ARRAY_AGG) Done() (Value, error) {
 					if f.values[i].OrderBy[orderBy].Value == nil {
 						return true
 					}
-					
 					if f.values[j].OrderBy[orderBy].Value == nil {
 						return false
 					}
