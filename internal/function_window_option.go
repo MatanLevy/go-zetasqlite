@@ -406,31 +406,22 @@ func (s *WindowFuncAggregatedStatus) Done(cb func([]Value, int, int) error) erro
 	sortedValues := make([]*WindowOrderedValue, len(values))
 	copy(sortedValues, values)
 	if len(sortedValues) != 0 {
-		for orderBy := 0; orderBy < len(sortedValues[0].OrderBy); orderBy++ {
-			isAsc := sortedValues[0].OrderBy[orderBy].IsAsc
-			if isAsc {
-				sort.Slice(sortedValues, func(i, j int) bool {
-					if sortedValues[i].OrderBy[orderBy].Value == nil {
-						return true
+		orderByObjects := sortedValues[0].OrderBy
+		if orderByObjects != nil && len(orderByObjects) != 0 {
+			sort.Slice(sortedValues, func(i, j int) bool {
+				for orderBy := 0; orderBy < len(orderByObjects); orderBy++ {
+					isAsc := orderByObjects[orderBy].IsAsc
+					result, areEqual, _ := shouldComeBefore(
+						sortedValues[i].OrderBy[orderBy].Value,
+						sortedValues[j].OrderBy[orderBy].Value,
+						isAsc,
+					)
+					if !areEqual {
+						return result
 					}
-					if sortedValues[j].OrderBy[orderBy].Value == nil {
-						return false
-					}
-					cond, _ := sortedValues[i].OrderBy[orderBy].Value.LT(sortedValues[j].OrderBy[orderBy].Value)
-					return cond
-				})
-			} else {
-				sort.Slice(sortedValues, func(i, j int) bool {
-					if sortedValues[i].OrderBy[orderBy].Value == nil {
-						return true
-					}
-					if sortedValues[j].OrderBy[orderBy].Value == nil {
-						return false
-					}
-					cond, _ := sortedValues[i].OrderBy[orderBy].Value.GT(sortedValues[j].OrderBy[orderBy].Value)
-					return cond
-				})
-			}
+				}
+				return false
+			})
 		}
 	}
 	s.SortedValues = sortedValues
