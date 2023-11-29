@@ -82,3 +82,42 @@ func modifyTimeZone(t time.Time, loc *time.Location) (time.Time, error) {
 func timeFromUnixNano(unixNano int64) time.Time {
 	return time.Unix(0, unixNano)
 }
+
+// checkOrderBy checks if value2 should come before value1 (first bool value).
+// Second bool is to determine if values are equal
+func shouldComeBefore(value1, value2 Value, isAscending bool) (bool, bool, error) {
+
+	if value1 == nil && value2 == nil {
+		return false, true, nil
+	}
+
+	if value1 == nil {
+		return true, false, nil
+	}
+	if value2 == nil {
+		return false, false, nil
+	}
+
+	v, err := value1.EQ(value2)
+	if err != nil {
+		return false, false, err
+	}
+
+	if v {
+		return false, true, nil
+	}
+
+	if isAscending {
+		v, err = value1.LT(value2)
+		if err != nil {
+			return false, false, err
+		}
+		return v, false, nil
+	}
+
+	v, err = value1.GT(value2)
+	if err != nil {
+		return false, false, err
+	}
+	return v, false, nil
+}
