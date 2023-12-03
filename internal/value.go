@@ -1897,6 +1897,14 @@ func (t TimeValue) Interface() interface{} {
 
 type TimestampValue time.Time
 
+const TimestampValuePrefix string = "__TIMESTAMP__"
+
+func (t TimestampValue) MarshalJSON() ([]byte, error) {
+	timeString := time.Time(t).Format(time.RFC3339)
+	jsonString := fmt.Sprintf("%s%s", TimestampValuePrefix, timeString)
+	return json.Marshal(jsonString)
+}
+
 func (t TimestampValue) AddValueWithPart(v time.Duration, part string) (Value, error) {
 	switch part {
 	case "MICROSECOND":
@@ -2036,7 +2044,11 @@ func (t TimestampValue) ToStruct() (*StructValue, error) {
 }
 
 func (t TimestampValue) ToJSON() (string, error) {
-	return t.ToString()
+	s, err := t.ToString()
+	if err != nil {
+		return "", err
+	}
+	return strconv.Quote(s), nil
 }
 
 func (t TimestampValue) ToTime() (time.Time, error) {

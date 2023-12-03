@@ -526,6 +526,13 @@ func valueFromGoReflectValue(v reflect.Value) (Value, error) {
 	case reflect.Bool:
 		return BoolValue(v.Bool()), nil
 	case reflect.String:
+		if strings.HasPrefix(v.String(), TimestampValuePrefix) {
+			timeWithoutPrefix := strings.TrimPrefix(v.String(), TimestampValuePrefix)
+			t, err := time.Parse(time.RFC3339, timeWithoutPrefix)
+			if err == nil {
+				return TimestampValue(t), nil
+			}
+		}
 		return StringValue(v.String()), nil
 	case reflect.Slice, reflect.Array:
 		if v.Type().Elem().Kind() == reflect.Uint8 {

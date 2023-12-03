@@ -411,7 +411,7 @@ func (s *WindowFuncAggregatedStatus) Done(cb func([]Value, int, int) error) erro
 			sort.Slice(sortedValues, func(i, j int) bool {
 				for orderBy := 0; orderBy < len(orderByObjects); orderBy++ {
 					isAsc := orderByObjects[orderBy].IsAsc
-					result, areEqual, _ := shouldComeBefore(
+					result, areEqual, _ := lowerThanEquals(
 						sortedValues[i].OrderBy[orderBy].Value,
 						sortedValues[j].OrderBy[orderBy].Value,
 						isAsc,
