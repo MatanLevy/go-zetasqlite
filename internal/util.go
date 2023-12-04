@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"regexp"
+	"sort"
 	"strconv"
 	"sync"
 	"time"
@@ -83,9 +84,10 @@ func timeFromUnixNano(unixNano int64) time.Time {
 	return time.Unix(0, unixNano)
 }
 
-// checkOrderBy checks if value2 should come before value1 (first bool value).
-// Second bool is to determine if values are equal
-func shouldComeBefore(value1, value2 Value, isAscending bool) (bool, bool, error) {
+// Checks whether value1 is lower than value2, or equals to it.
+// First bool: True if value1 < value2. False otherwise.
+// Second bool: True if value1 = value2. False otherwise.
+func lowerThanEquals(value1, value2 Value, isAscending bool) (bool, bool, error) {
 
 	if value1 == nil && value2 == nil {
 		return false, true, nil
@@ -109,15 +111,33 @@ func shouldComeBefore(value1, value2 Value, isAscending bool) (bool, bool, error
 
 	if isAscending {
 		v, err = value1.LT(value2)
-		if err != nil {
-			return false, false, err
-		}
-		return v, false, nil
+	} else {
+		v, err = value1.GT(value2)
 	}
 
-	v, err = value1.GT(value2)
 	if err != nil {
 		return false, false, err
 	}
 	return v, false, nil
+}
+
+func sortValues(orderByList []*AggregateOrderBy, orderedValues []*OrderedValue) {
+	if orderByList == nil || len(orderByList) == 0 {
+		return
+	}
+
+	sort.Slice(orderedValues, func(i, j int) bool {
+		for orderBy := 0; orderBy < len(orderByList); orderBy++ {
+			isAsc := orderByList[orderBy].IsAsc
+			isLower, areEqual, _ := lowerThanEquals(
+				orderedValues[i].OrderBy[orderBy].Value,
+				orderedValues[j].OrderBy[orderBy].Value,
+				isAsc,
+			)
+			if !areEqual {
+				return isLower
+			}
+		}
+		return false
+	})
 }

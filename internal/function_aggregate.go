@@ -80,22 +80,10 @@ func (f *ARRAY_AGG) Step(v Value, opt *AggregatorOption) error {
 }
 
 func (f *ARRAY_AGG) Done() (Value, error) {
-	if f.opt != nil && len(f.opt.OrderBy) != 0 {
-		sort.Slice(f.values, func(i, j int) bool {
-			for orderBy := 0; orderBy < len(f.opt.OrderBy); orderBy++ {
-				isAsc := f.opt.OrderBy[orderBy].IsAsc
-				result, areEqual, _ := shouldComeBefore(
-					f.values[i].OrderBy[orderBy].Value,
-					f.values[j].OrderBy[orderBy].Value,
-					isAsc,
-				)
-				if !areEqual {
-					return result
-				}
-			}
-			return false
-		})
+	if f.opt != nil {
+		sortValues(f.opt.OrderBy, f.values)
 	}
+
 	if f.opt != nil && f.opt.Limit != nil {
 		minLen := int64(len(f.values))
 		if *f.opt.Limit < minLen {
@@ -133,21 +121,8 @@ func (f *ARRAY_CONCAT_AGG) Step(v *ArrayValue, opt *AggregatorOption) error {
 }
 
 func (f *ARRAY_CONCAT_AGG) Done() (Value, error) {
-	if f.opt != nil && len(f.opt.OrderBy) != 0 {
-		sort.Slice(f.values, func(i, j int) bool {
-			for orderBy := 0; orderBy < len(f.opt.OrderBy); orderBy++ {
-				isAsc := f.opt.OrderBy[orderBy].IsAsc
-				result, areEqual, _ := shouldComeBefore(
-					f.values[i].OrderBy[orderBy].Value,
-					f.values[j].OrderBy[orderBy].Value,
-					isAsc,
-				)
-				if !areEqual {
-					return result
-				}
-			}
-			return false
-		})
+	if f.opt != nil {
+		sortValues(f.opt.OrderBy, f.values)
 	}
 	if f.opt != nil && f.opt.Limit != nil {
 		minLen := int64(len(f.values))
@@ -467,21 +442,8 @@ func (f *STRING_AGG) Step(v Value, delim string, opt *AggregatorOption) error {
 }
 
 func (f *STRING_AGG) Done() (Value, error) {
-	if f.opt != nil && len(f.opt.OrderBy) != 0 {
-		sort.Slice(f.values, func(i, j int) bool {
-			for orderBy := 0; orderBy < len(f.opt.OrderBy); orderBy++ {
-				isAsc := f.opt.OrderBy[orderBy].IsAsc
-				result, areEqual, _ := shouldComeBefore(
-					f.values[i].OrderBy[orderBy].Value,
-					f.values[j].OrderBy[orderBy].Value,
-					isAsc,
-				)
-				if !areEqual {
-					return result
-				}
-			}
-			return false
-		})
+	if f.opt != nil {
+		sortValues(f.opt.OrderBy, f.values)
 	}
 	if f.opt != nil && f.opt.Limit != nil {
 		minLen := int64(len(f.values))
