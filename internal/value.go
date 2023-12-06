@@ -1900,7 +1900,7 @@ type TimestampValue time.Time
 const TimestampValuePrefix string = "__TIMESTAMP__"
 
 func (t TimestampValue) MarshalJSON() ([]byte, error) {
-	timeString := time.Time(t).Format(time.RFC3339)
+	timeString := time.Time(t).Format(time.RFC3339Nano)
 	jsonString := fmt.Sprintf("%s%s", TimestampValuePrefix, timeString)
 	return json.Marshal(jsonString)
 }
