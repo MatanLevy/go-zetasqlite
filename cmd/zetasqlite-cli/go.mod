@@ -6,7 +6,7 @@ require (
 	github.com/chzyer/readline v1.5.1
 	github.com/fatih/color v1.15.0
 	github.com/goccy/go-zetasql v0.5.2
-	github.com/matanLevy/go-zetasqlite v0.17.8
+	github.com/goccy/go-zetasqlite v0.0.0-00010101000000-000000000000
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/olekukonko/tablewriter v0.0.5
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
@@ -19,6 +19,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v0.13.0 // indirect
 	github.com/DataDog/go-hll v1.0.2 // indirect
+	github.com/MatanLevy/go-zetasqlite v0.17.8 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/apache/arrow/go/v11 v11.0.0 // indirect
 	github.com/apache/thrift v0.16.0 // indirect

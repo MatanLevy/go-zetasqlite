@@ -11,10 +11,10 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/MatanLevy/go-zetasqlite"
 	"github.com/chzyer/readline"
 	"github.com/fatih/color"
 	"github.com/goccy/go-zetasql/types"
-	"github.com/goccy/go-zetasqlite"
 	"github.com/goccy/go-zetasqlite/internal"
 	"github.com/jessevdk/go-flags"
 	"github.com/olekukonko/tablewriter"
