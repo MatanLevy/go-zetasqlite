@@ -3,6 +3,7 @@ module github.com/goccy/go-zetasqlite/cmd/zetasqlite-cli
 go 1.21
 
 require (
+	github.com/MatanLevy/go-zetasqlite v0.17.10-0.20231213095134-9a693dd7e32d
 	github.com/chzyer/readline v1.5.1
 	github.com/fatih/color v1.15.0
 	github.com/goccy/go-zetasql v0.5.2
@@ -19,7 +20,6 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v0.13.0 // indirect
 	github.com/DataDog/go-hll v1.0.2 // indirect
-	github.com/MatanLevy/go-zetasqlite v0.17.8 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/apache/arrow/go/v11 v11.0.0 // indirect
 	github.com/apache/thrift v0.16.0 // indirect
