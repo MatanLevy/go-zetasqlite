@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"sync"
 
-	internal "github.com/goccy/go-zetasqlite/internal"
+	internal "github.com/MatanLevy/go-zetasqlite/internal"
 	"github.com/mattn/go-sqlite3"
 )
 

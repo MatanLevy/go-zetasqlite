@@ -3,10 +3,11 @@ module github.com/goccy/go-zetasqlite/cmd/zetasqlite-cli
 go 1.21
 
 require (
+	github.com/MatanLevy/go-zetasqlite v0.17.10-0.20231213095134-9a693dd7e32d
 	github.com/chzyer/readline v1.5.1
 	github.com/fatih/color v1.15.0
 	github.com/goccy/go-zetasql v0.5.2
-	github.com/goccy/go-zetasqlite v0.4.0
+	github.com/goccy/go-zetasqlite v0.0.0-00010101000000-000000000000
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/olekukonko/tablewriter v0.0.5
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
