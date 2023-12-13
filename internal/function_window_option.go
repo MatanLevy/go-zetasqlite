@@ -407,7 +407,7 @@ func (s *WindowFuncAggregatedStatus) Done(cb func([]Value, int, int) error) erro
 	copy(sortedValues, values)
 	if len(sortedValues) != 0 {
 		orderByObjects := sortedValues[0].OrderBy
-		if orderByObjects != nil && len(orderByObjects) != 0 {
+		if len(orderByObjects) != 0 {
 			sort.Slice(sortedValues, func(i, j int) bool {
 				for orderBy := 0; orderBy < len(orderByObjects); orderBy++ {
 					isAsc := orderByObjects[orderBy].IsAsc

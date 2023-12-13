@@ -122,7 +122,7 @@ func lowerThanEquals(value1, value2 Value, isAscending bool) (bool, bool, error)
 }
 
 func sortValues(orderByList []*AggregateOrderBy, orderedValues []*OrderedValue) {
-	if orderByList == nil || len(orderByList) == 0 {
+	if len(orderByList) == 0 {
 		return
 	}
 
