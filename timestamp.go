@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/goccy/go-zetasqlite/internal"
+	"github.com/MatanLevy/go-zetasqlite/internal"
 )
 
 // TimeFromTimestampValue zetasqlite returns string values ​​by default for timestamp values.
