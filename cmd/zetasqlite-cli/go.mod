@@ -6,7 +6,7 @@ require (
 	github.com/chzyer/readline v1.5.1
 	github.com/fatih/color v1.15.0
 	github.com/goccy/go-zetasql v0.5.2
-	github.com/goccy/go-zetasqlite v0.4.0
+	github.com/matanLevy/go-zetasqlite v0.17.8
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/olekukonko/tablewriter v0.0.5
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
