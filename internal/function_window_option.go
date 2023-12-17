@@ -314,7 +314,9 @@ func parseWindowOptions(args ...Value) ([]Value, *WindowFuncStatus, error) {
 		case WindowFuncOptionEnd:
 			opt.End = v.Value.(*WindowBoundary)
 		case WindowFuncOptionPartition:
-			opt.Partitions = append(opt.Partitions, v.Value.(Value))
+			if v.Value != nil {
+			    opt.Partitions = append(opt.Partitions, v.Value.(Value))
+			}
 		case WindowFuncOptionRowID:
 			opt.RowID = v.Value.(int64)
 		case WindowFuncOptionOrderBy:
