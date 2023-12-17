@@ -95,7 +95,7 @@ func JSON_EXTRACT_SCALAR(v, path string) (Value, error) {
 	if err := p.Unmarshal([]byte(v), &values); err != nil {
 		return nil, err
 	}
-	if len(values) == 0 {
+	if len(values) == 0 || values[0] == nil {
 		return nil, nil
 	}
 	value := values[0]
