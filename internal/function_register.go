@@ -427,9 +427,14 @@ func RegisterFunctions(conn *sqlite3.SQLiteConn) error {
 		if err != nil {
 			return "", err
 		}
-		array, err := decoded.ToArray()
-		if err != nil {
-			return "", err
+		var array *ArrayValue
+		if decoded != nil {
+			array, err = decoded.ToArray()
+			if err != nil {
+				return "", err
+			}
+		} else {
+			array = &ArrayValue{values: make([]Value, 0)}
 		}
 		encodedValues := make([]interface{}, 0, len(array.values))
 		for _, value := range array.values {
